@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"> </script>
+</head>
+    
+<body>
+<script>
+    
+var ref = new Firebase("https://hack-the-north-2016.firebaseio.com");    
+    
+$(document).keydown(function(event){
+        console.log("event pressed",event);
+	var keycode = (event.keyCode ? event.keyCode : event.which);    
+    
+    if(keycode == '5'){
+        ref.update({whichButtonInt: 0});
+        console.log("spacebar pressed");
+		//spacebar
+	}
+	if(keycode == '37'){
+        ref.update({whichButtonInt: 4});
+        console.log("left arrow pressed");
+		//left arrow
+	}
+    	if(keycode == '39'){
+        ref.update  ({whichButtonInt: 3});
+        console.log("right arrow pressed");
+		//right arrow
+	}
+    	if(keycode == '38'){
+        ref.update({whichButtonInt: 1});
+        console.log("up arrow pressed");
+		//up arrow
+	}
+    	if(keycode == '40'){
+        ref.update({whichButtonInt: 2});
+        console.log("down arrow pressed");
+		//down arrow
+	}
+});
+    
+$(document).click(function(e) { 
+    // Check for left button
+    if (e.button == 0) {
+               ref.update({whichButtonInt: 5});
+        console.log("click detected");
+    }
+});    
+
+</script>
+    <canvas id="myChart" width="400" height="400"></canvas>   
+<script>
+    var dataLabels = [];
+    var dataData = [];
+        var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: dataLabels,
+    datasets: [
+        {
+            label: "Light Sensor",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataData,
+            spanGaps: false,
+        }
+    ]
+}
+});
+    
+setInterval(function(){
+    var ref1 = new Firebase("https://hack-the-north-2016.firebaseio.com");    
+
+                      return ref1.child('lightVal').once("value", function(snapshot) {
+                           dataLabels.push(Date.now());
+  var value = snapshot.val();
+    dataData.push(value);
+});
+                      }, 1000);  
+    </script>    
+    
+         <canvas id="myChart2" width="400" height="400"></canvas>    
+ <script>   
+    var dataLabels2 = [];
+    var dataData2= [];
+        var ctx2 = document.getElementById("myChart2");
+var myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+    labels: dataLabels2,
+    datasets: [
+        {
+            label: "Sound Sensor",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(255,0,0,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataData2,
+            spanGaps: false,
+        }
+    ]
+}
+});
+    
+setInterval(function(){
+    var ref2 = new Firebase("https://hack-the-north-2016.firebaseio.com");    
+
+                      return ref2.child('soundVal').once("value", function(snapshot) {
+                           dataLabels2.push(Date.now());
+  var value = snapshot.val();
+    dataData2.push(value);
+});
+                      }, 1000);     
+    </script>
+    
+    
+            <canvas id="myChart3" width="400" height="400"></canvas>   
+    <script>
+    var dataLabels3 = [];
+    var dataData3 = [];
+        var ctx3 = document.getElementById("myChart3");
+var myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+    labels: dataLabels3,
+    datasets: [
+        {
+            label: "Temperature Sensor",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(0,0,255,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataData3,
+            spanGaps: false,
+        }
+    ]
+}
+});
+    
+setInterval(function(){
+    var ref3 = new Firebase("https://hack-the-north-2016.firebaseio.com");    
+
+                      return ref3.child('tempVal').once("value", function(snapshot) {
+                           dataLabels3.push(Date.now());
+  var value = snapshot.val();
+    dataData3.push(value);
+});
+                      }, 1000);         
+    
+</script>
+    
+    <img src="http://10.21.184.243:8080/video"/>
+</body>    
